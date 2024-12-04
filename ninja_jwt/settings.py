@@ -81,6 +81,7 @@ class NinjaJWTSettings(BaseModel):
         "ninja_jwt.schema.TokenBlacklistInputSchema"
     )
     TOKEN_VERIFY_INPUT_SCHEMA: Any = Field("ninja_jwt.schema.TokenVerifyInputSchema")
+    TOKEN_KID: Optional[str] = Field(None)
 
     @root_validator
     def validate_ninja_jwt_settings(cls, values):

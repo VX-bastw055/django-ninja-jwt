@@ -8,6 +8,7 @@ from jwt import InvalidAlgorithmError, InvalidTokenError, algorithms
 
 from .exceptions import TokenBackendError
 from .utils import format_lazy
+from .settings import api_settings
 
 try:
     from jwt import PyJWKClient, PyJWKClientError
@@ -112,11 +113,16 @@ class TokenBackend:
         if self.issuer is not None:
             jwt_payload["iss"] = self.issuer
 
+        headers = None
+        if api_settings.TOKEN_KID:
+            headers = {"kid": api_settings.TOKEN_KID}
+
         token = jwt.encode(
             jwt_payload,
             self.signing_key,
             algorithm=self.algorithm,
             json_encoder=self.json_encoder,
+            headers=headers,
         )
         if isinstance(token, bytes):
             # For PyJWT <= 1.7.1
