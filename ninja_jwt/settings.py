@@ -83,6 +83,7 @@ class NinjaJWTSettings(BaseSettings):
         "ninja_jwt.schema.TokenBlacklistInputSchema"
     )
     TOKEN_VERIFY_INPUT_SCHEMA: Any = Field("ninja_jwt.schema.TokenVerifyInputSchema")
+    TOKEN_KID: Optional[str] = Field(None)
 
     def __getattribute__(self, item):
         # Get the actual value using object.__getattribute__ to avoid recursion
